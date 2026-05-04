@@ -1,0 +1,6 @@
+@HelpDeak.Api_HostAddress = http://localhost:5207
+
+GET {{HelpDeak.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
