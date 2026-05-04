@@ -11,14 +11,9 @@ using System.Threading.Tasks;
 
 namespace HelpDesk.Repositories.Repositories
 {
-    public class TicketRepository : ITicketRepository
+    public class TicketRepository(IConfiguration configuration) : ITicketRepository
     {
-        private readonly string connectionString;
-
-        public TicketRepository(IConfiguration configuration)
-        {
-            connectionString = configuration.GetConnectionString("DefaultConnection");
-        }
+        private readonly string connectionString = configuration.GetConnectionString("DefaultConnection");
 
         public async Task<int> Create(Ticket ticket)
         {
@@ -91,6 +86,9 @@ namespace HelpDesk.Repositories.Repositories
                 Id = reader.GetInt32(reader.GetOrdinal("Id")),
                 Title = reader.GetString(reader.GetOrdinal("Title")),
                 Description = reader.GetString(reader.GetOrdinal("Description")),
+                LocationId = reader.GetInt32(reader.GetOrdinal("LocationId")),
+                CategoryId = reader.GetInt32(reader.GetOrdinal("CategoryId")),
+                DepartmentId = reader.GetInt32(reader.GetOrdinal("DepartmentId")),
                 Status = (TicketStatus)reader.GetInt32(reader.GetOrdinal("Status")),
                 Priority = (TicketPriority)reader.GetInt32(reader.GetOrdinal("Priority")),
                 AssignedTo = reader.IsDBNull(reader.GetOrdinal("AssignedTo"))
@@ -130,6 +128,9 @@ namespace HelpDesk.Repositories.Repositories
         {
             command.Parameters.AddWithValue("@Title", ticket.Title);
             command.Parameters.AddWithValue("@Description", ticket.Description);
+            command.Parameters.AddWithValue("@LocationId", ticket.LocationId);
+            command.Parameters.AddWithValue("@DepartmentId", ticket.DepartmentId);
+            command.Parameters.AddWithValue("@CategoryId", ticket.CategoryId);
             command.Parameters.AddWithValue("@Status", (int)ticket.Status);
             command.Parameters.AddWithValue("@Priority", (int)ticket.Priority);
             command.Parameters.AddWithValue("@AssignedTo", ticket.AssignedTo);

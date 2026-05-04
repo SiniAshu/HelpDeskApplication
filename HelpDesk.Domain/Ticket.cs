@@ -14,6 +14,12 @@ namespace HelpDesk.Domain
 
         public required string Description { get; set; }
 
+        public int LocationId { get; set; }
+
+        public int DepartmentId { get; set; }
+
+        public int CategoryId { get; set; }
+
         public TicketStatus Status { get; set; }
 
         public TicketPriority Priority { get; set; }
