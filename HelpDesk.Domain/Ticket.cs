@@ -10,15 +10,15 @@ namespace HelpDesk.Domain
 {
     public class Ticket : BaseDto
     {
-        public required string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
-        public required string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
-        public  Location Location { get; set; }
+        public  Location Location { get; set; } = new();
 
-        public  Department Department { get; set; }
+        public Department Department { get; set; } = new();
 
-        public  Category Category { get; set; }
+        public Category Category { get; set; } = new();
 
         public TicketStatus Status { get; set; }
 

@@ -2,6 +2,7 @@
 using HelpDesk.Domain.Enum;
 using HelpDesk.Repositories.Repositories;
 using HelpDesk.Services.Interfaces;
+using HelpDesk.Services.Services.Validator;
 
 namespace HelpDesk.Services.Services
 {
@@ -18,11 +19,7 @@ namespace HelpDesk.Services.Services
         {
             ArgumentNullException.ThrowIfNull(ticket);
 
-            if (string.IsNullOrWhiteSpace(ticket.Title))
-                throw new ArgumentException("Title is required.");
-
-            if (string.IsNullOrWhiteSpace(ticket.Description))
-                throw new ArgumentException("Description is required.");
+            TicketValidator.Validate(ticket);
 
             // Business default rules
             ticket.Status = TicketStatus.Open;
@@ -55,6 +52,18 @@ namespace HelpDesk.Services.Services
             // Update only allowed fields
             existing.Title = ticket.Title;
             existing.Description = ticket.Description;
+            existing.Category = new Category()
+            {
+                Id = ticket.Category.Id
+            };
+            existing.Location = new Location()
+            {
+                Id = ticket.Location.Id
+            };
+            existing.Department = new Department()
+            {
+                Id = ticket.Department.Id
+            };
             existing.Priority = ticket.Priority;
             existing.AssignedTo = ticket.AssignedTo;
             existing.ModifiedBy = ticket.ModifiedBy;
