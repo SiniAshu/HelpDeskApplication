@@ -86,9 +86,21 @@ namespace HelpDesk.Repositories.Repositories
                 Id = reader.GetInt32(reader.GetOrdinal("Id")),
                 Title = reader.GetString(reader.GetOrdinal("Title")),
                 Description = reader.GetString(reader.GetOrdinal("Description")),
-                LocationId = reader.GetInt32(reader.GetOrdinal("LocationId")),
-                CategoryId = reader.GetInt32(reader.GetOrdinal("CategoryId")),
-                DepartmentId = reader.GetInt32(reader.GetOrdinal("DepartmentId")),
+                Location = new Location()
+                {
+                   Id =  reader.GetInt32(reader.GetOrdinal("LocationId")),
+                   Name = reader.GetString(reader.GetOrdinal("Name"))
+                },
+                Category = new Category()
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("CategoryId")),
+                    Name = reader.GetString(reader.GetOrdinal("Name"))
+                },
+                Department = new Department()
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("DepartmentId")),
+                    Name = reader.GetString(reader.GetOrdinal("Name"))
+                },
                 Status = (TicketStatus)reader.GetInt32(reader.GetOrdinal("Status")),
                 Priority = (TicketPriority)reader.GetInt32(reader.GetOrdinal("Priority")),
                 AssignedTo = reader.IsDBNull(reader.GetOrdinal("AssignedTo"))
@@ -128,9 +140,9 @@ namespace HelpDesk.Repositories.Repositories
         {
             command.Parameters.AddWithValue("@Title", ticket.Title);
             command.Parameters.AddWithValue("@Description", ticket.Description);
-            command.Parameters.AddWithValue("@LocationId", ticket.LocationId);
-            command.Parameters.AddWithValue("@DepartmentId", ticket.DepartmentId);
-            command.Parameters.AddWithValue("@CategoryId", ticket.CategoryId);
+            command.Parameters.AddWithValue("@LocationId", ticket.Location.Id);
+            command.Parameters.AddWithValue("@DepartmentId", ticket.Department.Id);
+            command.Parameters.AddWithValue("@CategoryId", ticket.Category.Id);
             command.Parameters.AddWithValue("@Status", (int)ticket.Status);
             command.Parameters.AddWithValue("@Priority", (int)ticket.Priority);
             command.Parameters.AddWithValue("@AssignedTo", ticket.AssignedTo);
