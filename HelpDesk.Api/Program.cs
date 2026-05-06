@@ -1,13 +1,10 @@
-using HelpDesk.Repositories.Repositories;
-using HelpDesk.Services.Interfaces;
-using HelpDesk.Services.Services;
+using HelpDesk.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddScoped<ITicketRepository, TicketRepository>();
-builder.Services.AddScoped<ITicketService, TicketService>();
+DependencyInjection.Register(builder);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
